@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MysterieBlog - Accueil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .article {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .article h2 {
+            color: #333;
+            margin-top: 0;
+        }
+        .meta {
+            color: #666;
+            font-size: 0.9em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .contenu {
+            line-height: 1.6;
+        }
+        .aucun-article {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        .categorie {
+            background-color: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .tag {
+            display: inline-block;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            text-decoration: none;
+        }
+
+        .tag:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenue sur Mysterie Blog.cm</h1>
+    
+    {% if articles %}
+        {% for article in articles %}
+            <div class="article">
+                <h2>
+                    <a href="{% url 'article_detail' article.id %}" style="color: inherit;  text-decoration: none;">
+                        {{ article.titre }}
+                    </a>
+                </h2>
+                <div class="meta">
+                    Par <strong>{{ article.auteur.username }}</strong> 
+                    le {{ article.date_publication|date:"d F Y à H:i" }}
+
+                    <!-- Affichage categorie -->
+                     {% if article.categorie %}
+                         . Dans <span class="categorie"> {{ article.categorie.nom }}</span>
+                     {% endif %}
+                </div>
+                <div class="contenu">
+                    {{ article.contenu|truncatewords:30|linebreaks }}
+                    <p><a href="{% url 'article_detail' article.id %}"> Lire la suite... </a></p>
+                </div>
+
+                <!-- Afficher les tags -->
+                {% if article.tags.all %}
+                    <div class="tags">
+                        {% for tag in article.tags.all %}
+                        <span class="tag" style="background-color: {{tag.couleur}}; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0,8em; margin-right: 5px">
+                            {{ tag.nom }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="aucun-article">
+            <p>Aucun article publié pour le moment.</p>
+        </div>
+    {% endif %}
+</body>
+</html>
