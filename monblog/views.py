@@ -15,10 +15,5 @@ def article_detail(request, article_id):
     # Recupere l'article ou renvoie une 404 si non trouvé
     article = get_object_or_404(Article, pk=article_id)
 
-    #debug
-    print(f"Article recuperer : {article}")
-    print(f"Type : {type(article)}")
-    print(f"ID : {article.id}")
-
     # Passe l'article au template
     return render(request, 'monblog/detail.html', {'article': article})

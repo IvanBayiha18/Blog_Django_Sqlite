@@ -82,7 +82,7 @@
                 </div>
                 <div class="contenu">
                     {{ article.contenu|truncatewords:30|linebreaks }}
-                    <p><a href="{% url 'article_detail' article.id %}"> Lire la suite... </a></p>
+                    <p><a href="{% url 'article_detail' article.id %}"> Bien lire la suite... </a></p>
                 </div>
 
                 <!-- Afficher les tags -->
@@ -99,7 +99,7 @@
         {% endfor %}
     {% else %}
         <div class="aucun-article">
-            <p>Aucun article publié pour le moment.</p>
+            <p>Aucun article publié pour le moment...</p>
         </div>
     {% endif %}
 </body>
