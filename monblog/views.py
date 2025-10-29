@@ -4,12 +4,20 @@ from django.contrib import messages
 from comments.forms import CommentForm  # ✅ Import du formulaire
 from comments.models import Comment  # ✅ Import du modèle Comment
 
+# Create your views here.
+def index(request):
+    """Affiche la page d'accueil avec la liste des articles"""
+    print("✅ Vue index appelée!")
+    articles = Article.objects.filter(statut=Article.STATUT_PUBLIE)
+    return render(request, 'monblog/index.html', {'articles': articles})
+
 def article_detail(request, article_id):
     """Affiche un article spécifique avec ses commentaires ET un formulaire"""
     article = get_object_or_404(Article, id=article_id)
     
     # ✅ Récupère les commentaires APPROUVÉS de cet article
-    commentaires = article.comments.filter(approuve=True)
+    commentaires = Comment.objects.filter(article=article, approuve=True)
+    # commentaires = article.comments.filter(approuve=True)
     
     # ✅ Gestion du formulaire de commentaire
     if request.method == 'POST':

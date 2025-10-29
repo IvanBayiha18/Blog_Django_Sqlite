@@ -62,6 +62,40 @@
         .tag:hover {
             opacity: 0.8;
         }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .form-control:focus {
+            border-color: #3897f0;
+            outline: none;
+            box-shadow: 0 0 5px rgba(56, 151, 240, 0.3);
+        }
+
+        .alert {
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-info {
+        background: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+        }
+
     </style>
 </head>
 <body>
@@ -93,5 +127,47 @@
         
         <a href="{% url 'index' %}" class="retour">← Retour à l'accueil</a>
     </div>
+
+    
+<!-- Formulaire d'ajout de commentaire -->
+<div class="commentaire-form" style="margin-top: 30px;">
+    <h3>Ajouter un commentaire</h3>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" style="padding: 10px; margin: 10px 0; border-radius: 4px; 
+                {% if message.tags == 'success' %}background: #d4edda; color: #155724; border: 1px solid #c3e6cb;
+                {% else %}background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            
+            <div style="margin-bottom: 15px;">
+                {{ form.contenu.label_tag }}
+                {{ form.contenu }}
+                {% if form.contenu.help_text %}
+                    <small style="color: #666;">{{ form.contenu.help_text }}</small>
+                {% endif %}
+                {% if form.contenu.errors %}
+                    <div style="color: red;">{{ form.contenu.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" style="background: #3897f0; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">
+                Publier le commentaire
+            </button>
+        </form>
+    {% else %}
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 4px; text-align: center;">
+            <p>Vous devez être <a href="{% url 'admin:login' %}">connecté</a> pour poster un commentaire.</p>
+        </div>
+    {% endif %}
+</div>
+
 </body>
 </html>
