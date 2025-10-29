@@ -128,6 +128,28 @@
         <a href="{% url 'index' %}" class="retour">← Retour à l'accueil</a>
     </div>
 
+<!-- Section des commentaires existants -->
+<div class="commentaires-section" style="margin-top: 40px;">
+    <h3>Commentaires ({{ commentaires.count }})</h3>
+    
+    {% if commentaires %}
+        {% for commentaire in commentaires %}
+            <div class="commentaire" style="border: 1px solid #e0e0e0; padding: 20px; margin: 15px 0; border-radius: 8px; background: #fafafa;">
+                <div class="commentaire-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <strong style="color: #333;">{{ commentaire.auteur.username }}</strong>
+                    <small style="color: #666;">{{ commentaire.date_creation|date:"d F Y à H:i" }}</small>
+                </div>
+                <div class="commentaire-contenu" style="color: #444; line-height: 1.5;">
+                    {{ commentaire.contenu|linebreaks }}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div style="text-align: center; padding: 30px; color: #666; font-style: italic;">
+            <p>📝 Aucun commentaire pour le moment. Soyez le premier à commenter !</p>
+        </div>
+    {% endif %}
+</div>
     
 <!-- Formulaire d'ajout de commentaire -->
 <div class="commentaire-form" style="margin-top: 30px;">
