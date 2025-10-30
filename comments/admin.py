@@ -5,7 +5,7 @@ from django.utils.html import format_html
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    """Configuration de l'interface admin pour les commentaires"""
+    """Configuration de l'interface de l'admin pour les commentaires"""
     
     # Configuration de la liste
     list_display = (
