@@ -89,7 +89,7 @@ on_delete=models.SET_NULL   # Mise à NULL
 ### Installation
 ```bash
 # Cloner le projet
-git clone [url-du-repo]
+git clone https://github.com/IvanBayiha18/Blog_Django_Sqlite-V1.git
 
 # Installer les dépendances
 pip install django pillow
